@@ -2,18 +2,26 @@ const CODES = {
   A: 65,
   Z: 90,
 };
-function toCell(_) {
-  return `<div class="cell" contenteditable></div>`;
+function toCell(_, col) {
+  return `<div class="cell" data-col="${col}" contenteditable></div>`;
 }
 
-function toColumn(col) {
-  return `<div class="column">${col}</div>`;
+function toColumn(col, index) {
+  return `
+    <div class="column" data-type="resizable" data-col="${index}">
+        ${col}
+        <div class="col-resize" data-resize="col"></div>
+    </div>`;
 }
 
 function createRow(content, idx = '' ) {
+  const resizrer = idx ? `<div class="row-resize" data-resize="row"></div>` : '';
   return `
-    <div class="row">
-        <div class="row-info">${idx}</div>
+    <div class="row" data-type="resizable">
+        <div class="row-info">
+            ${idx}
+            ${resizrer}     
+        </div>
         <div class="row-data">${content}</div>
     </div>
   `;
